@@ -1,4 +1,4 @@
 proxylist
 =========
 
-代理列表维护
+Fetch verified proxy from http://www.cnproxy.com/
