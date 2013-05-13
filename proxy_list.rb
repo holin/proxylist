@@ -25,6 +25,7 @@ class ProxyList
 
   def verify_list
     max_thread = 30
+    final_lists = []
     0.step(@lists.size, max_thread).each do |i|
       treads = []
       top = (i + max_thread - 1)
@@ -32,16 +33,17 @@ class ProxyList
       (i..top).each do |k|
         proxy = @lists[k]
         treads << Thread.new do
-          @lists.delete(proxy) unless verify_proxy(proxy)
+          final_lists << proxy if verify_proxy(proxy)
         end
       end
       treads.map(&:join)
     end
 
     puts
-    puts "Verified proxys #{@lists.size}:"
-    puts @lists.join(" ")
-    @lists
+    puts "Verified proxys #{final_lists.size}:"
+    puts final_lists.join(" ")
+    @lists = final_lists
+    final_lists
   end
 
   private
